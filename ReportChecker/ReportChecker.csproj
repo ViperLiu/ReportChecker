@@ -56,6 +56,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReportError.cs" />
     <Compile Include="TableParserProvider.cs" />
+    <Compile Include="TableParsers\RuleResultTableParser.cs" />
     <Compile Include="TableParsers\TableParser.cs" />
     <Compile Include="TableParsers\TestInfoTableParser.cs" />
   </ItemGroup>
