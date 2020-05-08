@@ -18,6 +18,7 @@ namespace ReportChecker
 
         private readonly DocX _targetDocument;
         private readonly TableParser _testInfoTableParser;
+        private readonly TableParser _reportCoverTableParser;
         private readonly Dictionary<string, RuleResultTableParser> _ruleResultTableParsers 
             = new Dictionary<string, RuleResultTableParser>();
 
@@ -30,7 +31,7 @@ namespace ReportChecker
                 var topLeftCell = table.Rows[0].Cells[0];
                 if(topLeftCell.Paragraphs[0].Text == "檢測公司名稱")
                 {
-                    _reportCoverTable = table;
+                    _reportCoverTableParser = new ReportCoverTableParser(table);
                 }
                 else if(topLeftCell.Paragraphs[0].Text == "送測單位")
                 {
@@ -41,6 +42,11 @@ namespace ReportChecker
                     _overviewTable = table;
                 }
             }
+        }
+
+        public TableParser GetReportCoverTableParser()
+        {
+            return _reportCoverTableParser;
         }
 
         public TableParser GetTestInfoTableParser()
