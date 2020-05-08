@@ -1,10 +1,11 @@
-﻿using ReportChecker.TableParsers;
+using ReportChecker.TableParsers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xceed.Document.NET;
+using Xceed.Words.NET;
 
 namespace ReportChecker
 {
@@ -15,11 +16,13 @@ namespace ReportChecker
         private readonly Table _overviewTable;
         private readonly List<Table> _ruleResultTables = new List<Table>();
 
+        private readonly DocX _targetDocument;
         private readonly TableParser _testInfoTableParser;
 
-        public TableParserProvider(List<Table> tables)
+        public TableParserProvider(DocX targetDocument)
         {
-            foreach(var table in tables)
+            _targetDocument = targetDocument;
+            foreach(var table in targetDocument.Tables)
             {
                 var topLeftCell = table.Rows[0].Cells[0];
                 if(topLeftCell.Paragraphs[0].Text == "檢測公司名稱")
