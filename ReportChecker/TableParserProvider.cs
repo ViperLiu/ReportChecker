@@ -1,4 +1,4 @@
-using ReportChecker.TableParsers;
+﻿using ReportChecker.TableParsers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,15 +14,18 @@ namespace ReportChecker
         private readonly Table _reportCoverTable;
         private readonly Table _testInformationTable;
         private readonly Table _overviewTable;
-        private readonly List<Table> _ruleResultTables = new List<Table>();
+        
 
         private readonly DocX _targetDocument;
         private readonly TableParser _testInfoTableParser;
+        private readonly Dictionary<string, RuleResultTableParser> _ruleResultTableParsers 
+            = new Dictionary<string, RuleResultTableParser>();
 
         public TableParserProvider(DocX targetDocument)
         {
             _targetDocument = targetDocument;
-            foreach(var table in targetDocument.Tables)
+            GetAllRuleResultTables();
+            foreach (var table in targetDocument.Tables)
             {
                 var topLeftCell = table.Rows[0].Cells[0];
                 if(topLeftCell.Paragraphs[0].Text == "檢測公司名稱")
@@ -37,10 +40,48 @@ namespace ReportChecker
                 {
                     _overviewTable = table;
                 }
-                else if (topLeftCell.Paragraphs[0].Text == "檢測基準")
+            }
+        }
+
+        public TableParser GetTestInfoTableParser()
+        {
+            return _testInfoTableParser;
+        }
+
+        public TableParser GetRuleResultTableParser(string ruleNumber)
+        {
+            if (!_ruleResultTableParsers.ContainsKey(ruleNumber))
+                return null;
+            return _ruleResultTableParsers[ruleNumber];
+        }
+
+        private void GetAllRuleResultTables()
+        {
+            var ruleNumberList = new List<string>();
+            var ruleResultTables = new List<Table>();
+            foreach (var p in _targetDocument.Paragraphs)
+            {
+                if (p.StyleName == "4-11" && !p.IsListItem)
                 {
-                    _ruleResultTables.Add(table);
+                    var ruleNumber = p.Text.Trim().Substring(0, 9);
+                    ruleNumberList.Add(ruleNumber);
                 }
+            }
+            foreach(var table in _targetDocument.Tables)
+            {
+                var topLeftCell = table.Rows[0].Cells[0];
+                if (topLeftCell.Paragraphs[0].Text == "檢測基準")
+                {
+                    ruleResultTables.Add(table);
+                }
+            }
+
+            if (ruleNumberList.Count != ruleResultTables.Count)
+                throw new Exception("Report parsing error");
+
+            for (var i = 0; i < ruleNumberList.Count; i++)
+            {
+                _ruleResultTableParsers.Add(ruleNumberList[i], new RuleResultTableParser(ruleResultTables[i]));
             }
         }
     }
