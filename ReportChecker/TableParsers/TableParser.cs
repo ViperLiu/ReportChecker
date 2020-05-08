@@ -9,7 +9,7 @@ namespace ReportChecker.TableParsers
 {
     class TableParser
     {
-        private readonly Table _table;
+        protected readonly Table _table;
 
         public TableParser(Table table)
         {
