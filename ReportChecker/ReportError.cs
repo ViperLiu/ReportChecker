@@ -12,7 +12,7 @@ namespace ReportChecker
         public string RuleNumber { get; private set; }
         public int SubRuleNumber { get; private set; }
 
-        public ReportError(string ruleNumber, int subRuleNumber, string description)
+        public ReportError(string ruleNumber, string description, int subRuleNumber = -1)
         {
             RuleNumber = ruleNumber;
             SubRuleNumber = subRuleNumber;
