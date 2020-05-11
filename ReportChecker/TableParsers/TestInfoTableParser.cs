@@ -9,11 +9,11 @@ namespace ReportChecker.TableParsers
 {
     class TestInfoTableParser : TableParser
     {
-        public int AcceptCount { get; private set; }
+        public int AcceptCount { get; private set; } = 0;
 
-        public int FailCount { get; private set; }
+        public int FailCount { get; private set; } = 0;
 
-        public int NotfitCount { get; private set; }
+        public int NotfitCount { get; private set; } = 0;
 
         public TestInfoTableParser(Table table)
                 : base(table)
