@@ -40,7 +40,7 @@ namespace ReportChecker
             }
         }
 
-        public TableParser GetOverviewTableParser()
+        public OverviewTableParser GetOverviewTableParser()
         { 
             return _overviewTableParser;
         }
