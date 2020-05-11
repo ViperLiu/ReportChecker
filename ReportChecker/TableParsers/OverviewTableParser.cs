@@ -10,11 +10,11 @@ namespace ReportChecker.TableParsers
 {
     class OverviewTableParser : TableParser
     {
-        public int AcceptCount { get; private set; }
+        public int AcceptCount { get; private set; } = 0;
 
-        public int FailCount { get; private set; }
+        public int FailCount { get; private set; } = 0;
 
-        public int NotfitCount { get; private set; }
+        public int NotfitCount { get; private set; } = 0;
 
         public Dictionary<string, Paragraph> OverviewTableDict { get; } 
             = new Dictionary<string, Paragraph>();
