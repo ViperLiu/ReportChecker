@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -40,22 +40,14 @@ namespace ReportChecker
             var notfitCount = int.Parse(InputDocx.Tables[1].Rows[10].Cells[3].Paragraphs.First().Text);
             var totalCount = acceptCount + failCount + notfitCount;
 
-            //Console.WriteLine("= = = = = APP資訊表 = = = = =");
-            //Console.WriteLine("檢測分類：{0}", classText);
-            //Console.WriteLine("符合數量：{0}", acceptCount);
-            //Console.WriteLine("不符合數量：{0}", failCount);
-            //Console.WriteLine("不適用數量：{0}", notfitCount);
-            //Console.WriteLine("總共數量：{0}", totalCount);
-            //Console.WriteLine();
-
             var overviewTable = InputDocx.Tables[2];
             var overviewTableResults = CountOverviewTable(overviewTable);
-            //Console.WriteLine("= = = = = 檢測結果摘要表 = = = = =");
-            //Console.WriteLine("符合數量：{0}", overviewTableResults[0]);
-            //Console.WriteLine("不符合數量：{0}", overviewTableResults[1]);
-            //Console.WriteLine("不適用數量：{0}", overviewTableResults[2]);
-            //Console.WriteLine("總共數量：{0}", overviewTableResults[3]);
-            //Console.WriteLine();
+
+            
+            
+            
+            
+            
 
             Console.WriteLine("－－－－－－－－－－－－－");
             Console.WriteLine("｜　　　｜資訊表｜摘要表｜");
