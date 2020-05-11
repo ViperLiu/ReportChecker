@@ -8,7 +8,7 @@ using Xceed.Document.NET;
 
 namespace ReportChecker.TableParsers
 {
-    class OverviewTableParser : TableParser
+    class OverviewTableParser : TableParser, IResultCountable
     {
         public int AcceptCount { get; private set; } = 0;
 
