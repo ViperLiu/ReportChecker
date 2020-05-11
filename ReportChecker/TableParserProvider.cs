@@ -12,9 +12,9 @@ namespace ReportChecker
     class TableParserProvider
     {
         private readonly DocX _targetDocument;
-        private readonly TableParser _testInfoTableParser;
-        private readonly TableParser _reportCoverTableParser;
-        private readonly TableParser _overviewTableParser;
+        private readonly TestInfoTableParser _testInfoTableParser;
+        private readonly ReportCoverTableParser _reportCoverTableParser;
+        private readonly OverviewTableParser _overviewTableParser;
         private readonly Dictionary<string, RuleResultTableParser> _ruleResultTableParsers 
             = new Dictionary<string, RuleResultTableParser>();
 
@@ -45,12 +45,12 @@ namespace ReportChecker
             return _overviewTableParser;
         }
 
-        public TableParser GetReportCoverTableParser()
+        public ReportCoverTableParser GetReportCoverTableParser()
         {
             return _reportCoverTableParser;
         }
 
-        public TableParser GetTestInfoTableParser()
+        public TestInfoTableParser GetTestInfoTableParser()
         {
             return _testInfoTableParser;
         }
