@@ -7,7 +7,7 @@ using Xceed.Document.NET;
 
 namespace ReportChecker.TableParsers
 {
-    class TableParser
+    abstract class TableParser
     {
         protected readonly Table _table;
 
