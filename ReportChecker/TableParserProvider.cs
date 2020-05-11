@@ -11,14 +11,10 @@ namespace ReportChecker
 {
     class TableParserProvider
     {
-        private readonly Table _reportCoverTable;
-        private readonly Table _testInformationTable;
-        private readonly Table _overviewTable;
-        
-
         private readonly DocX _targetDocument;
         private readonly TableParser _testInfoTableParser;
         private readonly TableParser _reportCoverTableParser;
+        private readonly TableParser _overviewTableParser;
         private readonly Dictionary<string, RuleResultTableParser> _ruleResultTableParsers 
             = new Dictionary<string, RuleResultTableParser>();
 
@@ -39,9 +35,14 @@ namespace ReportChecker
                 }
                 else if(topLeftCell.Paragraphs[0].Text == "#")
                 {
-                    _overviewTable = table;
+                    _overviewTableParser = new OverviewTableParser(table);
                 }
             }
+        }
+
+        public TableParser GetOverviewTableParser()
+        { 
+            return _overviewTableParser;
         }
 
         public TableParser GetReportCoverTableParser()
