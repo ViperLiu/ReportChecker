@@ -18,8 +18,8 @@ namespace ReportChecker
         private static DocX InputDocx;
         private static TableParserProvider tableParsers;
         private static ReportCoverTableParser ReportCoverTable;
-        private static TestInfoTableParser TestInfoTable;
-        private static OverviewTableParser OverviewTable;
+        private static IResultCountable TestInfoTable;
+        private static IResultCountable OverviewTable;
 
         static void Main(string[] args)
         {
