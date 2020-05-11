@@ -52,7 +52,7 @@ namespace ReportChecker
             {
                 if(ResultTable.Rows[i].Cells[0].Paragraphs[0].MagicText.Count == 0)
                 {
-                    Errors.Add(new ReportError(Title, i, "上方欄位空白"));
+                    Errors.Add(new ReportError(Title, "上方欄位空白", subRuleNumber: i));
                     continue;
                 }
                 var text = ResultTable.Rows[i].Cells[0].Paragraphs[0].Text;
@@ -62,7 +62,7 @@ namespace ReportChecker
                 //Console.WriteLine("Text={0}, Color={1}, Size={2}", text, color, fontSize);
 
                 if (fontSize != 12)
-                    Errors.Add(new ReportError(Title, i, "上方字體大小錯誤"));
+                    Errors.Add(new ReportError(Title, "上方字體大小錯誤", subRuleNumber: i));
 
                 var condition1 = (text == Strings.AcceptText && color.ToArgb() != Color.Black.ToArgb());
                 var condition2 = (text == Strings.FailText && color.ToArgb() != Color.Red.ToArgb());
@@ -70,11 +70,11 @@ namespace ReportChecker
                 if (condition1 || condition2 || condition3)
                 {
                     Console.WriteLine("{0}, {1}", text, color);
-                    Errors.Add(new ReportError(Title, i, "上方文字顏色錯誤"));
+                    Errors.Add(new ReportError(Title, "上方文字顏色錯誤", subRuleNumber: i));
                 }
                 else if(text != Strings.AcceptText && text != Strings.FailText && text != Strings.NotfitText)
                 {
-                    Errors.Add(new ReportError(Title, i, "上方文字錯誤"));
+                    Errors.Add(new ReportError(Title, "上方文字錯誤", subRuleNumber: i));
                 }
             }
         }
@@ -108,7 +108,7 @@ namespace ReportChecker
                     var fontSize = t.formatting.Size == null ? 12 : t.formatting.Size;
                     if (fontSize != 12)
                     {
-                        Errors.Add(new ReportError(Title, subRuleNumber, "下方文字描述的字體大小錯誤"));
+                        Errors.Add(new ReportError(Title, "下方文字描述的字體大小錯誤", subRuleNumber));
                     }
                 }
 
@@ -116,7 +116,7 @@ namespace ReportChecker
                 var pattern = string.Format("符合基準({0})。", subRuleNumber);
                 if(p.Text.TrimEnd().EndsWith(pattern))
                 {
-                    Errors.Add(new ReportError(Title, subRuleNumber, "下方文字描述錯誤，應將 符合/不符合 放後面"));
+                    Errors.Add(new ReportError(Title, "下方文字描述錯誤，應將 符合/不符合 放後面", subRuleNumber));
                 }
             }
         }
@@ -131,7 +131,7 @@ namespace ReportChecker
             var condition3 = (targetText == Strings.AcceptText && (resultText.Contains(Strings.FailText) || resultText.Contains(Strings.NotfitText)));
             if (condition1 || condition2 || condition3)
             {
-                Errors.Add(new ReportError(Title, subRuleNumber, "下方文字描述與上方判定不符"));
+                Errors.Add(new ReportError(Title, "下方文字描述與上方判定不符", subRuleNumber));
             }
         }
     }
