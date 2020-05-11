@@ -9,30 +9,36 @@ namespace ReportChecker.TableParsers
 {
     class TestInfoTableParser : TableParser
     {
+        public int AcceptCount { get; private set; }
+
+        public int FailCount { get; private set; }
+
+        public int NotfitCount { get; private set; }
+
         public TestInfoTableParser(Table table)
                 : base(table)
         {
+            GetAcceptCount();
+            GetFailCount();
+            GetNotfitCount();
         }
 
-        public int GetAcceptCount()
+        private void GetAcceptCount()
         {
             var cell = GetCell(10, 1);
-            var acceptCount = int.Parse(cell.Paragraphs.First().Text);
-            return acceptCount;
+            AcceptCount = int.Parse(cell.Paragraphs.First().Text);
         }
 
-        public int GetFailCount()
+        private void GetFailCount()
         {
             var cell = GetCell(10, 2);
-            var failCount = int.Parse(cell.Paragraphs.First().Text);
-            return failCount;
+            FailCount = int.Parse(cell.Paragraphs.First().Text);
         }
 
-        public int GetNotfitCount()
+        private void GetNotfitCount()
         {
             var cell = GetCell(10, 3);
-            var notfitCount = int.Parse(cell.Paragraphs.First().Text);
-            return notfitCount;
+            NotfitCount = int.Parse(cell.Paragraphs.First().Text);
         }
     }
 }
