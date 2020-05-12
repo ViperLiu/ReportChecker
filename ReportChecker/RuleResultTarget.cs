@@ -14,16 +14,16 @@ namespace ReportChecker
 
         public string Title { get; private set; }
 
-        public Table ResultTable { get; private set; }
+        public Table TargetTable { get; private set; }
 
         public List<ReportError> Errors { get; }
 
         public RuleResultTarget(string ruleNumber, Table resultTable)
         {
             Title = ruleNumber;
-            ResultTable = resultTable;
+            TargetTable = resultTable;
             Errors = new List<ReportError>();
-            SubRuleCount = ResultTable.RowCount - 5;
+            SubRuleCount = TargetTable.RowCount - 5;
         }
 
         public void PrintErrors()
@@ -50,13 +50,13 @@ namespace ReportChecker
         {
             for(var i = 1; i <= SubRuleCount; i++)
             {
-                if(ResultTable.Rows[i].Cells[0].Paragraphs[0].MagicText.Count == 0)
+                if(TargetTable.Rows[i].Cells[0].Paragraphs[0].MagicText.Count == 0)
                 {
                     Errors.Add(new ReportError(Title, "上方欄位空白", subRuleNumber: i));
                     continue;
                 }
-                var text = ResultTable.Rows[i].Cells[0].Paragraphs[0].Text;
-                var formatting = ResultTable.Rows[i].Cells[0].Paragraphs[0].MagicText[0].formatting;
+                var text = TargetTable.Rows[i].Cells[0].Paragraphs[0].Text;
+                var formatting = TargetTable.Rows[i].Cells[0].Paragraphs[0].MagicText[0].formatting;
                 var color = formatting.FontColor == null ? Color.Black : (Color)(formatting.FontColor);
                 var fontSize = formatting.Size == null ? 12 : formatting.Size;
                 //Console.WriteLine("Text={0}, Color={1}, Size={2}", text, color, fontSize);
@@ -81,7 +81,7 @@ namespace ReportChecker
 
         private void _checkResultResultTextStyle()
         {
-            foreach(var p in ResultTable.Rows.Last().Paragraphs)
+            foreach(var p in TargetTable.Rows.Last().Paragraphs)
             {
                 //取得子基準的編號
                 var tmpArray = p.Text.Split(new string[] { "基準(" }, StringSplitOptions.RemoveEmptyEntries);
@@ -125,7 +125,7 @@ namespace ReportChecker
         {
             if (subRuleNumber == -1)
                 return;
-            var targetText = ResultTable.Rows[subRuleNumber].Paragraphs[0].Text;
+            var targetText = TargetTable.Rows[subRuleNumber].Paragraphs[0].Text;
             var condition1 = (targetText == Strings.FailText && !resultText.Contains(Strings.FailText));
             var condition2 = (targetText == Strings.NotfitText && !resultText.Contains(Strings.NotfitText));
             var condition3 = (targetText == Strings.AcceptText && (resultText.Contains(Strings.FailText) || resultText.Contains(Strings.NotfitText)));

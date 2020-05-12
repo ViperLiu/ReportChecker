@@ -11,7 +11,7 @@ namespace ReportChecker
     {
         string Title { get; }
 
-        Table ResultTable { get; }
+        Table TargetTable { get; }
 
         List<ReportError> Errors { get; }
 
